@@ -21,11 +21,17 @@ The data directory should follow this structure:
 The reference raster should be a geoTIFF, the script will extract the geographical information like extent and cell width and will apply it on the output LAI data. For this task bilinear resampling is used, which should may be changed to nearest neighbour method.
 
 
-References
-
-[1] Myneni, R., Knyazikhin, Y., Park, T. (2015). MOD15A2H MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V006 [Data set]. NASA EOSDIS Land Processes DAAC. Accessed 2020-01-22 from https://doi.org/10.5067/MODIS/MOD15A2H.006
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 soilgrids_lut.py
 
 This script generates a Lookup-Table soil_classedefinition.txt based on a dbf table derived by k-mean-clustering soilgrids data
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+References
+
+[1] Myneni, R., Knyazikhin, Y., Park, T. (2015). MOD15A2H MODIS/Terra Leaf Area Index/FPAR 8-Day L4 Global 500m SIN Grid V006 [Data set]. NASA EOSDIS Land Processes DAAC. Accessed 2020-01-22 from https://doi.org/10.5067/MODIS/MOD15A2H.006
+
