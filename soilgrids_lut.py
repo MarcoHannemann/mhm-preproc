@@ -39,8 +39,8 @@ df_cluster['ID'] = list(range(1, len(df_cluster) + 1))
 # generate columns for LUT
 horizon_id = list(range(1, len(df_cluster) + 1)) * 6
 soil_id = sorted(horizon_id)
-upper_depth = [0, 5, 15, 30, 60, 100] * 6
-lower_depth = [5, 15, 30, 60, 100, 200] * 6
+upper_depth = [0, 50, 150, 300, 600, 1000] * 6
+lower_depth = [5, 150, 300, 600, 1000, 2000] * 6
 clay = [x for depth in df_cluster[clay_names].values.tolist() for x in depth]
 sand = [x for depth in df_cluster[sand_names].values.tolist() for x in depth]
 bd = [x for depth in df_cluster[bd_names].values.tolist() for x in depth]
