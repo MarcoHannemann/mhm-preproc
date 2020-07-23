@@ -151,7 +151,7 @@ def main(data_dir, reference_raster):
     for year in years:
         output.append(create_dataset(data_dir, year, reference_raster))
     print('Merging datasets...')
-    xr_ds = xr.merge(output, compat='override')
+    xr_ds = xr.concat(output, dim='time')
     xr_ds.lai.attrs = {'long_name': 'LAI from MODIS'}
 
     xr_ds.time.attrs = {'standard_name': 'time'}
