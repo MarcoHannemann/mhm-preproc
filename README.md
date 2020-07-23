@@ -4,7 +4,7 @@ This is a collection of Python 3 scripts for preprocessing datafor use in mesosc
 
 modis_lai.py
 
-This script processes Leaf Area Index (LAI) data by MODIS (MOD15A2H)  to a netCDF file.
+- processes Leaf Area Index (LAI) data by MODIS (MOD15A2H)  to a netCDF file.
 
 LAI data (500 m) by MODIS is provided in 8-daily HDF files. You can use this script to clip and reproject the raw data and merge it into a netCDF file.
 
@@ -23,10 +23,23 @@ The reference raster should be a geoTIFF, the script will extract the geographic
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 
+penman_hourly.py
+
+- calculates the hourly crop reference evapotranspiration based on FAO 1998 (http://www.fao.org/3/X0490E/x0490e00.htm) for a given weather station from DWD
+
+- Run the main() function of the script and pass the ID of the weather station and a time range. Does only work for weather stations that provide all nescessary input data (most of the time radiaton is the limiting data (ftp://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/solar/)
+- writes out a .csv to /output
+
+Example: 
+
+ide = '01684'
+main(ide, ('2007-01-01', '2020-05-31 23:00:00'))
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 soilgrids_lut.py
 
-This script generates a Lookup-Table soil_classedefinition.txt based on a dbf table derived by k-mean-clustering soilgrids data
+- generates a Lookup-Table soil_classedefinition.txt based on a dbf table derived by k-mean-clustering soilgrids data
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
