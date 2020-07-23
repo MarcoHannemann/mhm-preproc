@@ -18,7 +18,7 @@ The data directory should follow this structure:
     LAI/LAI_2009
     ...
 
-The reference raster should be a geoTIFF, the script will extract the geographical information like extent and cell width and will apply it on the output LAI data. For this task bilinear resampling is used, which should may be changed to nearest neighbour method.
+The reference raster should be a geoTIFF, the script will extract the geographical information like extent and cell width and will apply it on the output LAI data. 
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
