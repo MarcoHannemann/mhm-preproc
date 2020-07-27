@@ -5,6 +5,7 @@ import ftplib
 import zipfile
 import numpy as np
 import pandas as pd
+from sun import Sun
 
 """This script downloads hourly weather data for a given weather station and calculates the hourly reference crop 
     evapotranspiration according to the FAO 1998 http://www.fao.org/3/X0490E/x0490e00.htm
@@ -209,23 +210,15 @@ def earth_sun_dist(doy):
 
 
 def calc_sunrise(lat, lon, doy, date):
-    """calculates time for sunrise in sunset to estimate daytime/nighttime for soil heat flux"""
-    suntime_diff = -0.171 * np.sin(0.0337 * doy + 0.465) - 0.1299 * np.sin(0.01787 * doy - 0.168)
-    declination = 0.4095 * np.sin(0.016906 * (doy - 80.086))
-    lat_rad = lat_to_rad(lat)
-    time_diff = 12 * np.arccos((np.sin(-0.0145) - np.sin(lat_rad) * np.sin(declination)) /
-                               (np.cos(lat_rad) * np.cos(declination))) / np.pi
-    sunrise_local = 12 - time_diff - suntime_diff
-    sunset_local = 12 + time_diff - suntime_diff
-    sunrise_dec = sunrise_local - lon / 15 + 1
-    sunset_dec = sunset_local - lon / 15 + 1
-
-    # convert time in decimals to datetime
-    sunrise_dec *= 60
-    sunset_dec *= 60
     date = date.replace(hour=0)
-    sunrise = date + pd.to_timedelta(sunrise_dec, unit='m')
-    sunset = date + pd.to_timedelta(sunset_dec, unit='m')
+    sun = Sun()
+    coords = {'longitude': lon, 'latitude': lat}
+    sunr_dec = sun.getSunriseTime( coords, date=date )['decimal']
+    suns_dec = sun.getSunsetTime(coords, date=date)['decimal']
+    sunr_dec *= 60
+    suns_dec *= 60
+    sunrise = date + pd.to_timedelta(sunr_dec, unit='m')
+    sunset = date + pd.to_timedelta(suns_dec, unit='m')
     return sunrise, sunset
 
 
@@ -286,12 +279,12 @@ def penman_hourly(station):
 
         # r_s/r_so represents the cloud cover. During daylight we estimate that ratio from measured solar radiation,
         # for nighttime wie assume r_s/r_so = 0.4 for humid climate (see FAO advices for hourly time step)
-        # for now this does not work, more testing needed, so: 0.4
-        if sunr < date < suns:
+
+        if sunr + pd.to_timedelta('1 hour') < date < suns - pd.to_timedelta('1 hours'):
             quot_rs = r_s / r_so
         else:
             quot_rs = 0.4
-        quot_rs = 0.4
+			
         # r_nl: Net longwave radiation (Eq. 39 with modified Stefan-Boltzman constant)
         r_nl = sigma * ((t_hr + 273.16) ** 4) * (0.34 - 0.14 * np.sqrt(e_a)) * (1.35 * quot_rs - 0.35)
 

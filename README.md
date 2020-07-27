@@ -1,6 +1,8 @@
 # mhm-preproc
 
-This is a collection of Python 3 scripts for preprocessing datafor use in mesoscale Hydrologic Model
+This is a collection of Python 3 scripts for preprocessing data for use in mesoscale Hydrologic Model
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
 
 modis_lai.py
 
