@@ -19,13 +19,14 @@ def create_latlon(f_reference):
 
     p = Proj(proj='utm', zone=33, ellps='WGS84')
     f_reference = gdal.Open(f_reference, gdalconst.GA_ReadOnly)
-    header = f_reference.GetGeoTransform()
+	
+    ulx, xres, xskew, uly, yskew, yres = f_reference.GetGeoTransform()
 
     ncols = f_reference.RasterXSize
     nrows = f_reference.RasterYSize
 
-    xx = np.linspace(header[0] + (header[1] / 2), header[0] + ncols * header[1] - (header[1] / 2), ncols)
-    yy = np.linspace(header[3] + (header[5] / 2), header[3] + nrows * header[5] - (header[5] / 2), nrows)
+    xx = np.linspace(ulx + (xres / 2), ulx + ncols * xres - (xres / 2), ncols)
+    yy = np.linspace(uly + (yres / 2), uly + nrows * yres - (yres / 2), nrows)
 
     a, b = np.meshgrid(xx, yy)
     easting, northing = xx, yy
